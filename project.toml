@@ -1,0 +1,12 @@
+[project]
+name = "Wi-Fi Password Generator"
+version = "pre-alpha"
+description = "A lightweight password generator that creates strong passwords up to 63 characters."
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Heitor Rocha", email = "heitordrp@gmail.com" }]
+dependencies = ["customtkinter"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+

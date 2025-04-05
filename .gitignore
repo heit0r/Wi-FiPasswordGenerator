@@ -1,0 +1,12 @@
+.venv/
+.ropeproject/
+
+# Temp files
+*.pyc
+__pycache__/
+*.swp
+*.swo
+.DS_Store
+*.bak
+*.tmp
+
