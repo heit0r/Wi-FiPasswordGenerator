@@ -105,7 +105,9 @@ class App(customtkinter.CTk):
 
         # Warning label.
 
-        self.warning_label = customtkinter.CTkLabel(master=self, text="", text_color="red")
+        self.warning_label = customtkinter.CTkLabel(
+            master=self, text="", text_color="red"
+        )
         self.warning_label.place(
             relx=0.3,
             rely=0.57,
@@ -113,7 +115,6 @@ class App(customtkinter.CTk):
             relwidth=0.2,
             relheight=0.04,
         )
-
 
         # Radio buttons
 
@@ -254,12 +255,11 @@ class App(customtkinter.CTk):
         self.entry.delete(2)
         print(self.pw_size)
         self.warning_label.configure(text="")
-        
 
     # Entry box
 
     def enter_text(self, event=None):
-        self.warning_label.configure(text="") #clear warning_label
+        self.warning_label.configure(text="")  # clear warning_label
         self.text = self.entry.get()  # will always get 'str'
 
         try:
@@ -273,7 +273,6 @@ class App(customtkinter.CTk):
             self.entry.insert(0, self.pw_size)
         except ValueError:
             self.warning_label.configure(text="Only numbers are allowed.")
-
 
     # Checkbox
 
@@ -301,7 +300,6 @@ class App(customtkinter.CTk):
         self.button_copy.configure(text="Copy")
         # self.warning_label.configure(text="")
 
-
     # Copy button
 
     def button3_copy(self, event):
@@ -314,7 +312,7 @@ class App(customtkinter.CTk):
         # print(f"Password copied: {password}") # better not disclose this.
         self.update()
         self.button_copy.configure(text="Copied")
-        self.warning_label.configure(text="") # clear warning_label
+        self.warning_label.configure(text="")  # clear warning_label
 
     # Exit
 
