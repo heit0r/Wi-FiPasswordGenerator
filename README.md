@@ -28,9 +28,8 @@
 <!-- ``` -->
 <!---->
 <!-- Or clone the repository manually: -->
-
 git clone https://github.com/heit0r/Wi-FiPasswordGenerator.git
-cd Wi-FiPasswordGenerator
+<!-- cd Wi-FiPasswordGenerator -->
 <!-- pip install . -->
 
 ---
