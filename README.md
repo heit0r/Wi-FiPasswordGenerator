@@ -12,10 +12,10 @@
 
 - Generate strong random passwords (up to 63 characters)
 - Customize password length and character set
-<!-- - Optional QR code generation (scan to connect) -->
 - Cross-platform GUI (Windows, Linux, macOS)
 - Dark mode and modern UI with CustomTkinter
 
+<!-- - Optional QR code generation (scan to connect) -->
 ---
 
 ## Installation
@@ -87,9 +87,9 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ### Credits
 
-    UI powered by CustomTkinter
+UI powered by CustomTkinter
     
-    <!-- QR code generation via qrcode (BSD License) -->
+<!-- QR code generation via qrcode (BSD License) -->
 
 ### Contributing
 
