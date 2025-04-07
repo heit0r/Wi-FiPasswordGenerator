@@ -95,7 +95,7 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ## Credits
 
-UI powered by CustomTkinter
+UI powered by [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter)
     
 <!-- QR code generation via qrcode (BSD License) -->
 
