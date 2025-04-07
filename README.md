@@ -32,6 +32,8 @@ git clone https://github.com/heit0r/Wi-FiPasswordGenerator.git
 cd Wi-FiPasswordGenerator
 <!-- pip install . -->
 
+---
+
 ## Running the App
 
 <!-- After installing, run the app using: -->
@@ -43,6 +45,8 @@ cd Wi-FiPasswordGenerator
 <!-- python -m wpg -->
 
 python wpg.py
+
+---
 
 ## Dependencies
 
@@ -80,10 +84,13 @@ pip install customtkinter
 <!-- pip3 install Wi-FiPasswordGenerator -->
 <!-- Wi-FiPasswordGenerator -->
 
+---
 
 ### License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
+
+---
 
 ### Credits
 
@@ -91,10 +98,13 @@ UI powered by CustomTkinter
     
 <!-- QR code generation via qrcode (BSD License) -->
 
+---
+
 ### Contributing
 
 Pull requests, suggestions, and forks are welcome! If you improve the project or add features, feel free to share.
 
+---
 
 ### Disclaimer
 
