@@ -109,4 +109,4 @@ Pull requests, suggestions, and forks are welcome! If you improve the project or
 
 ## Disclaimer
 
-This app is intended for personal and educational use. Always use the stronger (longer) passwords possible.
+Currently in pre-alpha, with only partial functionality implemented. This app is intended for personal and educational use. Always use the stronger (longer) passwords possible.
