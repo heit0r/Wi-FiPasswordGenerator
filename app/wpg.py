@@ -32,16 +32,8 @@ class App(customtkinter.CTk):
         self.grid_columnconfigure(0, weight=1)
 
         # Define window icon
-        icon_image = PhotoImage(file="images/icon.png")
+        icon_image = PhotoImage(file="../assets/icon.png")
         self.iconphoto(False, icon_image)
-
-        # Define config icon
-        # Doesn't automatically scale, switching to just ⚙️
-        # self.config_image = PhotoImage(file="images/gear2.png")
-
-        # Define help icon
-        # help_image = PhotoImage(file="images/icon.png")
-        # self.iconphoto(False, help_image)
 
         # Define fonts
         self.button_font = customtkinter.CTkFont(family="Verdana", size=26)
@@ -69,7 +61,7 @@ class App(customtkinter.CTk):
             wrap="word",
         )
 
-        self.pw_size = 32  # Default password size
+        self.pw_size = 63  # Default password size
 
         self.textbox_regenerate.place(relx=0.5, rely=0.4, anchor=customtkinter.CENTER)
         self.textbox_regenerate.configure(state="normal")
@@ -90,13 +82,15 @@ class App(customtkinter.CTk):
             relx=0.5,
             rely=0.5,
             anchor=customtkinter.CENTER,
-            relwidth=0.8,
+            relwidth=0.82,
             relheight=0.04,
         )
 
         # Entry
 
         self.entry = customtkinter.CTkEntry(master=self, placeholder_text="0-63")
+
+        # self.entry.focus()
 
         self.entry.place(
             relx=0.15,
@@ -109,27 +103,17 @@ class App(customtkinter.CTk):
         self.entry.bind("<Return>", self.enter_text)
         self.entry.bind("<KP_Enter>", self.enter_text)
 
-        #
-        #
-        # # Checkbox - Unlock for bigger passwords. Better not, let's focus on std. Wi-Fi.
-        #
-        # self.check_var = customtkinter.StringVar(value="on")
-        # self.checkbox = customtkinter.CTkCheckBox(
-        #     master=self,
-        #     text="Unlock",
-        #     command=self.checkbox_event,
-        #     variable=self.check_var,
-        #     onvalue="on",
-        #     offvalue="off",
-        # )
-        #
-        # self.checkbox.place(
-        #     relx=0.85,
-        #     rely=0.57,
-        #     anchor=customtkinter.CENTER,
-        #     relwidth=0.1,
-        #     relheight=0.04,
-        # )
+        # Warning label.
+
+        self.warning_label = customtkinter.CTkLabel(master=self, text="", text_color="red")
+        self.warning_label.place(
+            relx=0.3,
+            rely=0.57,
+            anchor=customtkinter.CENTER,
+            relwidth=0.2,
+            relheight=0.04,
+        )
+
 
         # Radio buttons
 
@@ -187,9 +171,11 @@ class App(customtkinter.CTk):
             relwidth=0.2,
             relheight=0.09,
         )
+        self.button_regenerate.bind("<ButtonRelease-1>", self.enter_text)
+        # 󱞪 add enter text when someone fills the entry and clicks Regenerate.
         self.button_regenerate.bind("<ButtonRelease-1>", self.button1_regenerate)
 
-        # There's no reason for History button.
+        # There's no reason for History button, but let's leave it here for now.
 
         # self.button2 = customtkinter.CTkButton(self, text="History", font=button_font)
         # self.button2.place(
@@ -267,16 +253,27 @@ class App(customtkinter.CTk):
         self.entry.insert(0, self.pw_size)
         self.entry.delete(2)
         print(self.pw_size)
+        self.warning_label.configure(text="")
+        
 
     # Entry box
 
     def enter_text(self, event=None):
-        """Exibe o texto digitado no label."""
-        text = self.entry.get()
-        self.pw_size = int(text)  # pw_size will now be text from entry
-        print(f"Entry: {self.pw_size}")
-        self.slider.set(self.pw_size)
-        self.entry.delete(0, 99999)
+        self.warning_label.configure(text="") #clear warning_label
+        self.text = self.entry.get()  # will always get 'str'
+
+        try:
+            number = int(self.text)
+            self.pw_size = max(
+                8, min(round(number), 63)
+            )  # pw_size will now be text from entry
+            print(f"Entry: {self.pw_size}")
+            self.slider.set(self.pw_size)
+            self.entry.delete(0, 99)
+            self.entry.insert(0, self.pw_size)
+        except ValueError:
+            self.warning_label.configure(text="Only numbers are allowed.")
+
 
     # Checkbox
 
@@ -302,6 +299,8 @@ class App(customtkinter.CTk):
         )
         self.textbox_regenerate.configure(state="disabled")
         self.button_copy.configure(text="Copy")
+        # self.warning_label.configure(text="")
+
 
     # Copy button
 
@@ -312,8 +311,10 @@ class App(customtkinter.CTk):
         password = self.textbox_regenerate.get("0.0", "end").strip()
         self.textbox_regenerate.configure(state="disabled")
         self.clipboard_append(password)
+        # print(f"Password copied: {password}") # better not disclose this.
         self.update()
         self.button_copy.configure(text="Copied")
+        self.warning_label.configure(text="") # clear warning_label
 
     # Exit
 
