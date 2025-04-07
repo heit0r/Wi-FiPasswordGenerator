@@ -14,6 +14,7 @@
 - Customize password length and character set
 - Cross-platform GUI (Windows, Linux, macOS)
 - Dark mode and modern UI with CustomTkinter
+- Runs locally and offline
 
 <!-- - Optional QR code generation (scan to connect) -->
 ---
