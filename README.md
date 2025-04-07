@@ -86,13 +86,13 @@ pip install customtkinter
 
 ---
 
-### License
+## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
 
 ---
 
-### Credits
+## Credits
 
 UI powered by CustomTkinter
     
@@ -100,12 +100,12 @@ UI powered by CustomTkinter
 
 ---
 
-### Contributing
+## Contributing
 
 Pull requests, suggestions, and forks are welcome! If you improve the project or add features, feel free to share.
 
 ---
 
-### Disclaimer
+## Disclaimer
 
 This app is intended for personal and educational use. Always use the stronger (longer) passwords possible.
