@@ -11,6 +11,44 @@ customtkinter.set_default_color_theme(
 )  # Themes: blue (default), dark-blue, green
 
 
+class ToplevelWindow(customtkinter.CTkToplevel):
+    def __init__(self):
+        super().__init__()
+        self.geometry("400x400")
+        self.title("Wi-Fi Password Generator")
+
+        # Icon
+        info_image = PhotoImage(file="../assets/icon.png")
+        self.iconphoto(False, info_image)
+
+        # Label
+        text = """
+        Characters like \\, " and ' may be hard to type or copy on some keyboards. Symbols such as # and |, or letters like I, l, and 1 can also be difficult to distinguish in certain fonts, especially non-monospaced ones, or when typing manually.
+
+    Easy mode avoids using these characters, while Hard mode includes all of them.
+    """
+        self.label = customtkinter.CTkLabel(
+            self,
+            text=text,
+            wraplength=350,
+            justify="left",
+        )
+        self.label.pack(padx=20, pady=30)
+        # self.label.place(relx=0.5, rely=0.4, anchor=customtkinter.CENTER)
+        self.label.configure(font=customtkinter.CTkFont(family="Verdana", size=16))
+
+        self.button_info_exit = customtkinter.CTkButton(
+            self,
+            fg_color="#ff6666",
+            hover_color="brown",
+            text="Exit",
+            font=customtkinter.CTkFont(family="Verdana", size=24),
+            command=self.destroy,
+        )
+
+        self.button_info_exit.pack(padx=20, pady=20)  # pack (place) button
+
+
 class App(customtkinter.CTk):
 
     def __init__(self):
@@ -131,7 +169,7 @@ class App(customtkinter.CTk):
         )
         self.radiobutton_easy.place(
             relx=0.2,
-            rely=0.7,
+            rely=0.66,
             anchor=customtkinter.CENTER,
             relwidth=0.2,
             relheight=0.08,
@@ -150,7 +188,7 @@ class App(customtkinter.CTk):
 
         self.radiobutton_hard.place(
             relx=0.2,
-            rely=0.76,
+            rely=0.72,
             anchor=customtkinter.CENTER,
             relwidth=0.2,
             relheight=0.08,
@@ -174,7 +212,7 @@ class App(customtkinter.CTk):
         )
         self.button_regenerate.bind("<ButtonRelease-1>", self.enter_text)
         # 󱞪 add enter text when someone fills the entry and clicks Regenerate.
-        self.button_regenerate.bind("<ButtonRelease-1>", self.button1_regenerate)
+        self.button_regenerate.bind("<ButtonRelease-1>", self.regenerate)
 
         # There's no reason for History button, but let's leave it here for now.
 
@@ -187,6 +225,8 @@ class App(customtkinter.CTk):
         #     relheight=0.09,
         # )
         # self.button2.bind("<ButtonRelease-1>", self.button2_history)
+
+        # Copy
 
         self.button_copy = customtkinter.CTkButton(
             self, text="Copy", font=self.button_font
@@ -201,6 +241,8 @@ class App(customtkinter.CTk):
         )
         self.button_copy.bind("<ButtonRelease-1>", self.button3_copy)
 
+        # Exit
+
         self.button_exit = customtkinter.CTkButton(
             self, text="Exit", font=self.button_font
         )
@@ -213,6 +255,8 @@ class App(customtkinter.CTk):
         )
         self.button_exit.bind("<ButtonRelease-1>", self.button4_exit)
 
+        # Config
+
         self.button_conf = customtkinter.CTkButton(self, text="⚙️", font=self.gear_font)
         self.button_conf.place(
             relx=0.75 - 0.002,
@@ -223,17 +267,21 @@ class App(customtkinter.CTk):
         )
         self.button_conf.bind("<ButtonRelease-1>", self.configure)
 
-        self.button_help = customtkinter.CTkButton(
-            self, text="?", font=self.button_font
+        # Info
+
+        self.toplevel_window = None  # Create Info ToplevelWindow
+
+        self.button_info = customtkinter.CTkButton(
+            self, text="Info", font=self.button_font
         )
-        self.button_help.place(
+        self.button_info.place(
             relx=0.85,
             rely=0.7,
             anchor=customtkinter.CENTER,
             relwidth=0.099,
             relheight=0.09,
         )
-        self.button_help.bind("<ButtonRelease-1>", self.help)
+        self.button_info.bind("<ButtonRelease-1>", self.info)
 
     #
     #
@@ -271,6 +319,7 @@ class App(customtkinter.CTk):
             self.slider.set(self.pw_size)
             self.entry.delete(0, 99)
             self.entry.insert(0, self.pw_size)
+            self.regenerate(self)  # Regenerate after press Enter
         except ValueError:
             self.warning_label.configure(text="Only numbers are allowed.")
 
@@ -281,7 +330,7 @@ class App(customtkinter.CTk):
 
     # Regenerate button
 
-    def button1_regenerate(self, event):
+    def regenerate(self, event):
         self.textbox_regenerate.destroy()
         self.textbox_regenerate = customtkinter.CTkTextbox(
             master=self,
@@ -297,8 +346,8 @@ class App(customtkinter.CTk):
             "0.0", f"{core.generate_password(self.pw_size, self.radio_var.get())}\n"
         )
         self.textbox_regenerate.configure(state="disabled")
-        self.button_copy.configure(text="Copy")
-        # self.warning_label.configure(text="")
+        self.button_copy.configure(text="Copy")  # Copied returns to Copy
+        self.warning_label.configure(text="")  # Clear warning_label
 
     # Copy button
 
@@ -309,7 +358,6 @@ class App(customtkinter.CTk):
         password = self.textbox_regenerate.get("0.0", "end").strip()
         self.textbox_regenerate.configure(state="disabled")
         self.clipboard_append(password)
-        # print(f"Password copied: {password}") # better not disclose this.
         self.update()
         self.button_copy.configure(text="Copied")
         self.warning_label.configure(text="")  # clear warning_label
@@ -325,10 +373,16 @@ class App(customtkinter.CTk):
     def configure(self, event):
         print("Configure")
 
-    # Help/Info
+    # Info
 
-    def help(self, event):
-        print("Help")
+    def info(self, event):
+        if self.toplevel_window is None or not self.toplevel_window.winfo_exists():
+            self.toplevel_window = (
+                ToplevelWindow()
+            )  # create window if its None or destroyed
+        else:
+            self.toplevel_window.focus()  # if window exists focus it
+        print("Info")
 
 
 app = App()
