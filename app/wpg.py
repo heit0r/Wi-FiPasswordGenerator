@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-
 import core
 import customtkinter
 from tkinter import PhotoImage
@@ -114,8 +113,6 @@ class App(customtkinter.CTk):
             master=self, from_=8, to=63, number_of_steps=55, command=self.slider_event
         )
 
-        # self.slider.set(20), better not.
-
         self.slider.place(
             relx=0.5,
             rely=0.5,
@@ -127,8 +124,6 @@ class App(customtkinter.CTk):
         # Entry
 
         self.entry = customtkinter.CTkEntry(master=self, placeholder_text="0-63")
-
-        # self.entry.focus()
 
         self.entry.place(
             relx=0.15,
