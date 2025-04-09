@@ -1,19 +1,26 @@
 #!/usr/bin/env python
 
+from tkinter import PhotoImage
+
 import core
 import customtkinter
-from tkinter import PhotoImage
 
 customtkinter.set_appearance_mode("system")  # Modes: system (default), light, dark
 customtkinter.set_default_color_theme(
     "dark-blue"
 )  # Themes: blue (default), dark-blue, green
 
+#
+# Info Window
+#
 
-class ToplevelWindow(customtkinter.CTkToplevel):
+
+class InfoWindow(customtkinter.CTkToplevel):
+    """Info window with text regarding Easy and Hard modes."""
+
     def __init__(self):
         super().__init__()
-        self.geometry("400x400")
+        self.geometry("400x500")
         self.title("Wi-Fi Password Generator")
 
         # Icon
@@ -34,7 +41,7 @@ class ToplevelWindow(customtkinter.CTkToplevel):
         )
         self.label.pack(padx=20, pady=30)
         # self.label.place(relx=0.5, rely=0.4, anchor=customtkinter.CENTER)
-        self.label.configure(font=customtkinter.CTkFont(family="Verdana", size=16))
+        self.label.configure(font=customtkinter.CTkFont(family="Verdana", size=18))
 
         self.button_info_exit = customtkinter.CTkButton(
             self,
@@ -48,6 +55,24 @@ class ToplevelWindow(customtkinter.CTkToplevel):
         self.button_info_exit.pack(padx=20, pady=20)  # pack (place) button
 
 
+#
+# QRCode Window
+#
+
+
+class QRCodeWindow(customtkinter.CTkToplevel):
+    """Window to display the generated QRCode."""
+
+    def __init__(self):
+        super().__init__()
+        self.geometry("400x500")
+        self.title("Generated QRCode")
+
+        # Icon
+        info_image = PhotoImage(file="../assets/icon.png")
+        self.iconphoto(False, info_image)
+
+
 class App(customtkinter.CTk):
 
     def __init__(self):
@@ -56,6 +81,7 @@ class App(customtkinter.CTk):
         self.title("Wi-Fi Password Generator")
 
         # Label
+
         self.title_label = customtkinter.CTkLabel(
             master=self,
             text="Wi-Fi Password Generator",  # Title text
@@ -66,15 +92,17 @@ class App(customtkinter.CTk):
         self.title_label.grid(row=0, column=0, pady=50, sticky="n")
 
         # Center label horizontally
+
         self.grid_columnconfigure(0, weight=1)
 
         # Define window icon
+
         icon_image = PhotoImage(file="../assets/icon.png")
         self.iconphoto(False, icon_image)
 
         # Define fonts
+
         self.button_font = customtkinter.CTkFont(family="Verdana", size=26)
-        self.gear_font = customtkinter.CTkFont(family="Verdana", size=32)
         self.textbox_font = customtkinter.CTkFont(family="Verdana", size=16)
 
         # add widgets to app
@@ -136,7 +164,7 @@ class App(customtkinter.CTk):
         self.entry.bind("<Return>", self.enter_text)
         self.entry.bind("<KP_Enter>", self.enter_text)
 
-        # Warning label.
+        # Warning label
 
         self.warning_label = customtkinter.CTkLabel(
             master=self, text="", text_color="red"
@@ -250,21 +278,19 @@ class App(customtkinter.CTk):
         )
         self.button_exit.bind("<ButtonRelease-1>", self.button4_exit)
 
-        # Config
+        # QRCode
 
-        self.button_conf = customtkinter.CTkButton(self, text="⚙️", font=self.gear_font)
-        self.button_conf.place(
+        self.button_qrcode = customtkinter.CTkButton(
+            self, text="QR", font=self.button_font
+        )
+        self.button_qrcode.place(
             relx=0.75 - 0.002,
             rely=0.7,
             anchor=customtkinter.CENTER,
             relwidth=0.095,
             relheight=0.09,
         )
-        self.button_conf.bind("<ButtonRelease-1>", self.configure)
-
-        # Info
-
-        self.toplevel_window = None  # Create Info ToplevelWindow
+        self.button_qrcode.bind("<ButtonRelease-1>", self.qrcode)
 
         self.button_info = customtkinter.CTkButton(
             self, text="Info", font=self.button_font
@@ -277,6 +303,11 @@ class App(customtkinter.CTk):
             relheight=0.09,
         )
         self.button_info.bind("<ButtonRelease-1>", self.info)
+
+        # Toplevel Windows
+
+        self.info_window = None  # Create Info Window
+        self.qrcode_window = None  # Create QRCode Window
 
     #
     #
@@ -363,20 +394,22 @@ class App(customtkinter.CTk):
         print("Exiting...")
         self.destroy()
 
-    # Config
+    # QRCode
 
-    def configure(self, event):
-        print("Configure")
+    def qrcode(self, event):
+        if self.qrcode_window is None or not self.qrcode_window.winfo_exists():
+            self.qrcode_window = QRCodeWindow()  # create win if its None or destroyed
+        else:
+            self.qrcode_window.focus()  # if window exists focus it
+        print("QRCode")
 
     # Info
 
     def info(self, event):
-        if self.toplevel_window is None or not self.toplevel_window.winfo_exists():
-            self.toplevel_window = (
-                ToplevelWindow()
-            )  # create window if its None or destroyed
+        if self.info_window is None or not self.info_window.winfo_exists():
+            self.info_window = InfoWindow()  # create window if its None or destroyed
         else:
-            self.toplevel_window.focus()  # if window exists focus it
+            self.info_window.focus()  # if window exists focus it
         print("Info")
 
 
