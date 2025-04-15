@@ -4,6 +4,8 @@ from tkinter import PhotoImage
 
 import core
 import customtkinter
+import qrcode
+from PIL import Image
 
 customtkinter.set_appearance_mode("system")  # Modes: system (default), light, dark
 customtkinter.set_default_color_theme(
@@ -72,6 +74,37 @@ class QRCodeWindow(customtkinter.CTkToplevel):
         info_image = PhotoImage(file="../assets/icon.png")
         self.iconphoto(False, info_image)
 
+        # Image
+        my_image = customtkinter.CTkImage(
+            light_image=Image.open("../assets/png.png"),
+            dark_image=Image.open("../assets/png.png"),
+            size=(300, 300),
+        )
+
+        self.qrcode_label = customtkinter.CTkLabel(
+            self, image=my_image, text=""
+        )  # display image with a CTkLabel
+
+        # self.qrcode_label.grid(row=0, column=0, padx=50, pady=60, sticky="n")
+        self.qrcode_label.place(relx=0.5, rely=0.4, anchor=customtkinter.CENTER)
+
+        self.button_qrcode_exit = customtkinter.CTkButton(
+            self,
+            fg_color="#ff6666",
+            hover_color="brown",
+            text="Exit",
+            font=customtkinter.CTkFont(family="Verdana", size=24),
+            command=self.destroy,
+        )
+
+        # self.button_qrcode_exit.grid(row=1, column=0, padx=50, pady=20, sticky="n")
+        self.button_qrcode_exit.place(relx=0.5, rely=0.9, anchor=customtkinter.CENTER)
+
+
+#
+# App
+#
+
 
 class App(customtkinter.CTk):
 
@@ -112,11 +145,11 @@ class App(customtkinter.CTk):
         # 3. 3 Buttons + 1 external event
         #   3.1 External event with the last 4 passwords generated.
 
-        # Textbox_regenerate:
+        # Textbox_generate:
 
-        # self.textbox_regenerate = None
+        # self.textbox_generate = None
 
-        self.textbox_regenerate = customtkinter.CTkTextbox(
+        self.textbox_generate = customtkinter.CTkTextbox(
             master=self,
             activate_scrollbars=False,
             font=self.textbox_font,
@@ -128,12 +161,12 @@ class App(customtkinter.CTk):
 
         self.pw_size = 63  # Default password size
 
-        self.textbox_regenerate.place(relx=0.5, rely=0.4, anchor=customtkinter.CENTER)
-        self.textbox_regenerate.configure(state="normal")
-        self.textbox_regenerate.insert(
+        self.textbox_generate.place(relx=0.5, rely=0.4, anchor=customtkinter.CENTER)
+        self.textbox_generate.configure(state="normal")
+        self.textbox_generate.insert(
             "0.0", f"{core.generate_password(self.pw_size, 0)}\n"
         )  # 0 for Easy characters by default.
-        self.textbox_regenerate.configure(state="disabled")
+        self.textbox_generate.configure(state="disabled")
 
         # Slider
 
@@ -141,6 +174,7 @@ class App(customtkinter.CTk):
             master=self, from_=8, to=63, number_of_steps=55, command=self.slider_event
         )
 
+        self.slider.set(63)
         self.slider.place(
             relx=0.5,
             rely=0.5,
@@ -150,8 +184,8 @@ class App(customtkinter.CTk):
         )
 
         # Entry
-
-        self.entry = customtkinter.CTkEntry(master=self, placeholder_text="0-63")
+        self.entry = customtkinter.CTkEntry(master=self)
+        self.entry.insert(0, 63)  # Begin at 63 characters
 
         self.entry.place(
             relx=0.15,
@@ -217,27 +251,29 @@ class App(customtkinter.CTk):
             relheight=0.08,
         )
 
-        # Regenerate
+        # Generate
 
-        self.button_regenerate = customtkinter.CTkButton(
+        self.button_generate = customtkinter.CTkButton(
             self,
             fg_color="#ff6666",
             hover_color="brown",
-            text="Regenerate",
+            text="Generate",
             font=self.button_font,
         )
-        self.button_regenerate.place(
+        self.button_generate.place(
             relx=0.2,
             rely=0.9,
             anchor=customtkinter.CENTER,
             relwidth=0.2,
             relheight=0.09,
         )
-        self.button_regenerate.bind("<ButtonRelease-1>", self.enter_text)
-        # 󱞪 add enter text when someone fills the entry and clicks Regenerate.
-        self.button_regenerate.bind("<ButtonRelease-1>", self.regenerate)
+        self.button_generate.bind("<ButtonRelease-1>", self.enter_text)
 
-        # There's no reason for History button, but let's leave it here for now.
+        # button_generate won't be directly binded to generate(),
+        # bc it's preferable for it to act like enter_text(), always receiving text.
+        # self.button_generate.bind("<ButtonRelease-1>", self.generate)
+
+        # There's no reason for History button, but let's leave it here fow now.
 
         # self.button2 = customtkinter.CTkButton(self, text="History", font=button_font)
         # self.button2.place(
@@ -323,21 +359,20 @@ class App(customtkinter.CTk):
     # Slider
 
     def slider_event(self, slider_value):
+        self.warning_label.configure(text="")
         self.pw_size = max(8, min(round(slider_value), 63))  # Input size handling
         self.entry.delete(0, 2)
         self.entry.insert(0, self.pw_size)
         self.entry.delete(2)
         print(self.pw_size)
-        self.warning_label.configure(text="")
 
     # Entry box
 
     def enter_text(self, event=None):
-        self.warning_label.configure(text="")  # clear warning_label
-        self.text = self.entry.get()  # will always get 'str'
+        text = self.entry.get()  # will always get 'str'
 
         try:
-            number = int(self.text)
+            number = int(text)
             self.pw_size = max(
                 8, min(round(number), 63)
             )  # pw_size will now be text from entry
@@ -345,7 +380,8 @@ class App(customtkinter.CTk):
             self.slider.set(self.pw_size)
             self.entry.delete(0, 99)
             self.entry.insert(0, self.pw_size)
-            self.regenerate(self)  # Regenerate after press Enter
+            self.generate(self)  # Generate after press Enter
+
         except ValueError:
             self.warning_label.configure(text="Only numbers are allowed.")
 
@@ -354,11 +390,11 @@ class App(customtkinter.CTk):
     def checkbox_event(self):
         print("checkbox toggled, current value:", self.check_var.get())
 
-    # Regenerate button
+    # Generate
 
-    def regenerate(self, event):
-        self.textbox_regenerate.destroy()
-        self.textbox_regenerate = customtkinter.CTkTextbox(
+    def generate(self, event):
+        self.textbox_generate.destroy()
+        self.textbox_generate = customtkinter.CTkTextbox(
             master=self,
             activate_scrollbars=False,
             font=self.textbox_font,
@@ -366,12 +402,12 @@ class App(customtkinter.CTk):
             height=40,
             corner_radius=0,
         )
-        self.textbox_regenerate.place(relx=0.5, rely=0.4, anchor=customtkinter.CENTER)
-        self.textbox_regenerate.configure(state="normal")
-        self.textbox_regenerate.insert(
+        self.textbox_generate.place(relx=0.5, rely=0.4, anchor=customtkinter.CENTER)
+        self.textbox_generate.configure(state="normal")
+        self.textbox_generate.insert(
             "0.0", f"{core.generate_password(self.pw_size, self.radio_var.get())}\n"
         )
-        self.textbox_regenerate.configure(state="disabled")
+        self.textbox_generate.configure(state="disabled")
         self.button_copy.configure(text="Copy")  # Copied returns to Copy
         self.warning_label.configure(text="")  # Clear warning_label
 
@@ -380,9 +416,9 @@ class App(customtkinter.CTk):
     def button3_copy(self, event):
         print("Copy button clicked")
         self.clipboard_clear()
-        self.textbox_regenerate.configure(state="normal")
-        password = self.textbox_regenerate.get("0.0", "end").strip()
-        self.textbox_regenerate.configure(state="disabled")
+        self.textbox_generate.configure(state="normal")
+        password = self.textbox_generate.get("0.0", "end").strip()
+        self.textbox_generate.configure(state="disabled")
         self.clipboard_append(password)
         self.update()
         self.button_copy.configure(text="Copied")
