@@ -5,11 +5,10 @@ from tkinter import PhotoImage
 import core
 import customtkinter
 import qrcode
-from PIL import Image
 
-customtkinter.set_appearance_mode("system")  # Modes: system (default), light, dark
+customtkinter.set_appearance_mode("dark")  # Modes: system (default), light, dark
 customtkinter.set_default_color_theme(
-    "dark-blue"
+    "blue"
 )  # Themes: blue (default), dark-blue, green
 
 #
@@ -65,7 +64,7 @@ class InfoWindow(customtkinter.CTkToplevel):
 class QRCodeWindow(customtkinter.CTkToplevel):
     """Window to display the generated QRCode."""
 
-    def __init__(self):
+    def __init__(self, password):
         super().__init__()
         self.geometry("400x500")
         self.title("Generated QRCode")
@@ -75,9 +74,14 @@ class QRCodeWindow(customtkinter.CTkToplevel):
         self.iconphoto(False, info_image)
 
         # Image
+        # self.password = password
+        # print(password)
+        code = qrcode.make(password)  # From https://pypi.org/project/qrcode/
+        qrcode_image = code.get_image()  # <- Convert code into image.
+
         my_image = customtkinter.CTkImage(
-            light_image=Image.open("../assets/png.png"),
-            dark_image=Image.open("../assets/png.png"),
+            light_image=qrcode_image,
+            dark_image=qrcode_image,
             size=(300, 300),
         )
 
@@ -164,7 +168,7 @@ class App(customtkinter.CTk):
         self.textbox_generate.place(relx=0.5, rely=0.4, anchor=customtkinter.CENTER)
         self.textbox_generate.configure(state="normal")
         self.textbox_generate.insert(
-            "0.0", f"{core.generate_password(self.pw_size, 0)}\n"
+            "1.0", f"{core.generate_password(self.pw_size, 0)}\n"
         )  # 0 for Easy characters by default.
         self.textbox_generate.configure(state="disabled")
 
@@ -326,7 +330,7 @@ class App(customtkinter.CTk):
             relwidth=0.095,
             relheight=0.09,
         )
-        self.button_qrcode.bind("<ButtonRelease-1>", self.qrcode)
+        self.button_qrcode.bind("<ButtonRelease-1>", self.open_qrcode_window)
 
         self.button_info = customtkinter.CTkButton(
             self, text="Info", font=self.button_font
@@ -338,7 +342,7 @@ class App(customtkinter.CTk):
             relwidth=0.099,
             relheight=0.09,
         )
-        self.button_info.bind("<ButtonRelease-1>", self.info)
+        self.button_info.bind("<ButtonRelease-1>", self.open_info_window)
 
         # Toplevel Windows
 
@@ -359,7 +363,8 @@ class App(customtkinter.CTk):
     # Slider
 
     def slider_event(self, slider_value):
-        self.warning_label.configure(text="")
+        self.warning_label.configure(text="")  # clear warning_label
+        self.button_copy.configure(text="Copy")  # Copied turns back to Copy
         self.pw_size = max(8, min(round(slider_value), 63))  # Input size handling
         self.entry.delete(0, 2)
         self.entry.insert(0, self.pw_size)
@@ -405,7 +410,7 @@ class App(customtkinter.CTk):
         self.textbox_generate.place(relx=0.5, rely=0.4, anchor=customtkinter.CENTER)
         self.textbox_generate.configure(state="normal")
         self.textbox_generate.insert(
-            "0.0", f"{core.generate_password(self.pw_size, self.radio_var.get())}\n"
+            "1.0", f"{core.generate_password(self.pw_size, self.radio_var.get())}\n"
         )
         self.textbox_generate.configure(state="disabled")
         self.button_copy.configure(text="Copy")  # Copied returns to Copy
@@ -417,7 +422,7 @@ class App(customtkinter.CTk):
         print("Copy button clicked")
         self.clipboard_clear()
         self.textbox_generate.configure(state="normal")
-        password = self.textbox_generate.get("0.0", "end").strip()
+        password = self.textbox_generate.get("1.0", "end").strip()
         self.textbox_generate.configure(state="disabled")
         self.clipboard_append(password)
         self.update()
@@ -432,16 +437,23 @@ class App(customtkinter.CTk):
 
     # QRCode
 
-    def qrcode(self, event):
+    def open_qrcode_window(self, event):
+
+        self.textbox_generate.configure(state="normal")
+        password = self.textbox_generate.get("1.0", "end").strip()
+        self.textbox_generate.configure(state="disabled")
+
         if self.qrcode_window is None or not self.qrcode_window.winfo_exists():
-            self.qrcode_window = QRCodeWindow()  # create win if its None or destroyed
+            self.qrcode_window = QRCodeWindow(
+                password
+            )  # create win if its None or destroyed
         else:
             self.qrcode_window.focus()  # if window exists focus it
         print("QRCode")
 
     # Info
 
-    def info(self, event):
+    def open_info_window(self, event):
         if self.info_window is None or not self.info_window.winfo_exists():
             self.info_window = InfoWindow()  # create window if its None or destroyed
         else:

@@ -12,7 +12,7 @@
 
 - Generate strong random passwords (up to 63 characters)
 - Customize password length and character set
-- Cross-platform GUI (Windows, Linux, macOS)
+- Cross-platform
 - Dark mode and modern UI with CustomTkinter
 - Runs locally and offline
 
@@ -102,7 +102,7 @@ UI powered by [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter)
 
 ## Contributing
 
-Pull requests, suggestions, and forks are welcome! If you improve the project or add features, feel free to share.
+Pull requests, suggestions, and forks are welcome. If you improve the project or add features, feel free to share.
 
 ---
 
