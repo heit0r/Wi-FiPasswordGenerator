@@ -13,7 +13,7 @@
 - Generate strong random passwords (up to 63 characters)
 - Customize password length and character set
 - Cross-platform
-- Dark mode and modern UI with CustomTkinter
+- Dark and modern UI with CustomTkinter
 - Runs locally and offline
 
 <!-- - Optional QR code generation (scan to connect) -->
