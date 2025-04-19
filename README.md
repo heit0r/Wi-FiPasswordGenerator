@@ -50,7 +50,7 @@ python wpg.py
 
 ## Dependencies
 
-These will be installed automatically via pip, but here’s what the project uses:
+<!-- These will be installed automatically via pip, but here’s what the project uses: -->
 
     customtkinter
 
