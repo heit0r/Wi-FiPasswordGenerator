@@ -1,6 +1,7 @@
 .venv/
 .ropeproject/
 .ruff_cache
+/dist
 
 # Temp files
 *.pyc
