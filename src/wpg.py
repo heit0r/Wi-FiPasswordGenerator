@@ -109,7 +109,6 @@ class QRCodeWindow(customtkinter.CTkToplevel):
 
 
 class App(customtkinter.CTk):
-
     def __init__(self):
         super().__init__()
         self.geometry("800x600")
@@ -388,10 +387,6 @@ class App(customtkinter.CTk):
         except ValueError:
             self.warning_label.configure(text="Only numbers are allowed.")
 
-    # Checkbox
-
-    def checkbox_event(self):
-        print("checkbox toggled, current value:", self.check_var.get())
 
     # Generate
 
@@ -436,7 +431,6 @@ class App(customtkinter.CTk):
     # QRCode
 
     def open_qrcode_window(self, event):
-
         self.password_textbox.configure(state="normal")
         password = self.password_textbox.get("0.0", "end").strip()
         self.password_textbox.configure(state="disabled")
