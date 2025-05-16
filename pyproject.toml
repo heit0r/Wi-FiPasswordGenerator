@@ -1,12 +1,29 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
 [project]
-name = "Wi-Fi Password Generator"
-version = "pre-alpha"
+name = "Wi-FiPasswordGenerator"
+version = "0.3.1"
+authors = [
+  { name="heit0r", email=" heitordrp@gmail.com" },
+]
 description = "A lightweight password generator that creates strong passwords up to 63 characters."
 readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Intended Audience :: End Users/Desktop",
+    "Operating System :: OS Independent",
+    "Topic :: Education :: Testing",
+    "Topic :: Security",
+    "Topic :: Security :: Cryptography",
+]
 license = { file = "LICENSE" }
-authors = [{ name = "Heitor Rocha", email = "heitordrp@gmail.com" }]
 dependencies = ["customtkinter"]
 
-[tool.setuptools.packages.find]
-where = ["src"]
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
 
+[project.urls]
+Homepage = "https://github.com/heit0r/Wi-FiPasswordGenerator"
+Issues = "https://github.com/heit0r/Wi-FiPasswordGenerator/issues"

@@ -1,6 +1,6 @@
 # Wi-Fi Password Generator
 
-![screenshot](assets/screenshot.png)
+![screenshot](https://raw.githubusercontent.com/heit0r/Wi-FiPasswordGenerator/refs/heads/master/assets/screenshot.png)
 
 **Wi-Fi Password Generator** is a cross-platform Python app for generating secure Wi-Fi passwords of up to 63 characters — the maximum allowed by WPA/WPA2 standards. It features a user-friendly GUI built with [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter)
 
