@@ -12,7 +12,7 @@
 - Cross-platform
 - Dark and modern UI with CustomTkinter
 - Runs locally and offline
-- Optional QR code generation (scan to connect)
+- QR code generation
 
 
 ## Installation
@@ -26,7 +26,7 @@ It is recommended to install Wi-Fi Password Generator directly from **PyPI**:
 
 After installing, run the app using:
 
-```wpg```,`wifipg` or even `wifipasswordgenerator`
+```wpg``` or `wifipg` or even `wifipasswordgenerator`
 
 
 ## Dependencies
