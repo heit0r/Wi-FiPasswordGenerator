@@ -17,7 +17,7 @@
 
 ## Installation
 
-It is recommended to install Wi-Fi Password Generator directly from **PyPI**:
+It is recommended to install **Wi-Fi Password Generator** directly from **PyPI**:
 
 ```pip install wi-fipasswordgenerator```
 
