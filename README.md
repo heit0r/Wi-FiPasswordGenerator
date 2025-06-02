@@ -26,7 +26,7 @@ It is recommended to install Wi-Fi Password Generator directly from **PyPI**:
 
 After installing, run the app using:
 
-```wpg```
+```wpg```,`wifipg` or even `wifipasswordgenerator`
 
 
 ## Dependencies
