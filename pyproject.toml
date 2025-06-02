@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "Wi-FiPasswordGenerator"
-version = "0.3.1"
+version = "0.3.2"
 authors = [
   { name="heit0r", email=" heitordrp@gmail.com" },
 ]
@@ -19,10 +19,19 @@ classifiers = [
     "Topic :: Security :: Cryptography",
 ]
 license = { file = "LICENSE" }
-dependencies = ["customtkinter"]
+dependencies = [
+  "customtkinter",
+  "qrcode[pil]"
+]
+
+[project.scripts]
+wpg = "wi_fipasswordgenerator.wpg:main"
+wifipg = "wi_fipasswordgenerator.wpg:main"
+wifipasswordgenerator = "wi_fipasswordgenerator.wpg:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src"]
+packages = ["wi_fipasswordgenerator"]
+
 
 [project.urls]
 Homepage = "https://github.com/heit0r/Wi-FiPasswordGenerator"

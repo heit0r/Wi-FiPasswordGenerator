@@ -1,10 +1,53 @@
 #!/usr/bin/env python
 
-from tkinter import PhotoImage
+# CustomTKInter:
+#
+# Copyright (c) 2023 Tom Schimansky
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
 
-import core
+# python-qrcode
+#
+# Copyright (c) 2011, Lincoln Loop
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+#     * Redistributions of source code must retain the above copyright notice,
+#       this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above copyright notice,
+#       this list of conditions and the following disclaimer in the documentation
+#       and/or other materials provided with the distribution.
+#     * Neither the package name nor the names of its contributors may be
+#       used to endorse or promote products derived from this software without
+#       specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+# ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+# ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+# import core # if __name__ == "__main__"
+from tkinter import PhotoImage
 import customtkinter
+import os
 import qrcode
+from wi_fipasswordgenerator import core
 
 customtkinter.set_appearance_mode("dark")  # Modes: system (default), light, dark
 customtkinter.set_default_color_theme(
@@ -24,9 +67,13 @@ class InfoWindow(customtkinter.CTkToplevel):
         self.geometry("400x500")
         self.title("Wi-Fi Password Generator")
 
-        # Icon
-        info_image = PhotoImage(file="../assets/icon.png")
-        self.iconphoto(False, info_image)
+
+        # Define window icon
+        
+        BASE_DIR = os.path.dirname(__file__)
+        icon_path = os.path.join(BASE_DIR, "icon.png")
+        icon_image = PhotoImage(file=icon_path)
+        self.iconphoto(False, icon_image)
 
         # Label
         text = """
@@ -69,9 +116,11 @@ class QRCodeWindow(customtkinter.CTkToplevel):
         self.geometry("400x500")
         self.title("Generated QRCode")
 
-        # Icon
-        info_image = PhotoImage(file="../assets/icon.png")
-        self.iconphoto(False, info_image)
+        # Define window icon
+        BASE_DIR = os.path.dirname(__file__)
+        icon_path = os.path.join(BASE_DIR, "icon.png")
+        icon_image = PhotoImage(file=icon_path)
+        self.iconphoto(False, icon_image)
 
         # Image
         code = qrcode.make(password)  # From https://pypi.org/project/qrcode/
@@ -114,6 +163,13 @@ class App(customtkinter.CTk):
         self.geometry("800x600")
         self.title("Wi-Fi Password Generator")
 
+        # Define window icon
+
+        BASE_DIR = os.path.dirname(__file__)
+        icon_path = os.path.join(BASE_DIR, "icon.png")
+        icon_image = PhotoImage(file=icon_path)
+        self.iconphoto(False, icon_image)
+
         # Label
 
         self.title_label = customtkinter.CTkLabel(
@@ -128,11 +184,6 @@ class App(customtkinter.CTk):
         # Center label horizontally
 
         self.grid_columnconfigure(0, weight=1)
-
-        # Define window icon
-
-        icon_image = PhotoImage(file="../assets/icon.png")
-        self.iconphoto(False, icon_image)
 
         # Define fonts
 
@@ -387,7 +438,6 @@ class App(customtkinter.CTk):
         except ValueError:
             self.warning_label.configure(text="Only numbers are allowed.")
 
-
     # Generate
 
     def generate(self, event):
@@ -455,5 +505,19 @@ class App(customtkinter.CTk):
         print("Info")
 
 
-app = App()
-app.mainloop()
+def main():
+    application = App()
+    application.mainloop()
+
+# Although this section seems to work,
+# a strange dpi bug appears when Exit is pressed.
+
+# if __name__ == "__main__":
+#     import core
+#     main()
+# else:
+#     from wi_fipasswordgenerator import core
+#     main()
+
+if __name__ == "__main__":
+    main()
