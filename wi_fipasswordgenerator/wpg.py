@@ -42,12 +42,12 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# import core # if __name__ == "__main__"
+import core # if __name__ == "__main__"
 from tkinter import PhotoImage
 import customtkinter
 import os
 import qrcode
-from wi_fipasswordgenerator import core
+# from wi_fipasswordgenerator import core
 
 customtkinter.set_appearance_mode("dark")  # Modes: system (default), light, dark
 customtkinter.set_default_color_theme(
@@ -272,7 +272,7 @@ class App(customtkinter.CTk):
             master=self,
             font=self.textbox_font,
             text="Easy characters",
-            command=self.radiobutton_event,
+            # command=self.radiobutton_event,
             variable=self.radio_var,
             value=0,
         )
@@ -290,7 +290,7 @@ class App(customtkinter.CTk):
             master=self,
             font=self.textbox_font,
             text="Hard characters",
-            command=self.radiobutton_event,
+            # command=self.radiobutton_event,
             variable=self.radio_var,
             value=1,
         )
@@ -405,8 +405,8 @@ class App(customtkinter.CTk):
 
     # Radio buttons
 
-    def radiobutton_event(self):
-        print("radiobutton toggled, value:", self.radio_var.get())
+    # def radiobutton_event(self):
+    #     print("radiobutton toggled, value:", self.radio_var.get())
 
     # Slider
 
@@ -417,7 +417,7 @@ class App(customtkinter.CTk):
         self.entry.delete(0, 2)
         self.entry.insert(0, self.pw_size)
         self.entry.delete(2)
-        print(self.pw_size)
+        # print(self.pw_size)
 
     # Entry box
 
@@ -429,7 +429,7 @@ class App(customtkinter.CTk):
             self.pw_size = max(
                 8, min(round(number), 63)
             )  # pw_size will now be text from entry
-            print(f"Entry: {self.pw_size}")
+            # print(f"Entry: {self.pw_size}")
             self.slider.set(self.pw_size)
             self.entry.delete(0, 99)
             self.entry.insert(0, self.pw_size)
@@ -462,7 +462,7 @@ class App(customtkinter.CTk):
     # Copy button
 
     def button3_copy(self, event):
-        print("Copy button clicked")
+        # print("Copy button clicked")
         self.clipboard_clear()
         self.password_textbox.configure(state="normal")
         password = self.password_textbox.get("0.0", "end").strip()
@@ -475,7 +475,7 @@ class App(customtkinter.CTk):
     # Exit
 
     def button4_exit(self, event):
-        print("Exiting...")
+        # print("Exiting...")
         self.destroy()
 
     # QRCode
@@ -492,7 +492,7 @@ class App(customtkinter.CTk):
             self.qrcode_window.attributes("-topmost", True)
         else:
             self.qrcode_window.focus()  # if window exists focus it
-        print("QRCode")
+        # print("QRCode")
 
     # Info
 
@@ -502,7 +502,7 @@ class App(customtkinter.CTk):
             self.info_window.attributes("-topmost", True)
         else:
             self.info_window.focus()  # if window exists focus it
-        print("Info")
+        # print("Info")
 
 
 def main():
