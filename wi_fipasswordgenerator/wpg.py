@@ -42,7 +42,6 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# import core # if __name__ == "__main__"
 from tkinter import PhotoImage
 import customtkinter
 import os
