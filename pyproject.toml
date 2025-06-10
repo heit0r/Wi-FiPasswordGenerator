@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "Wi-FiPasswordGenerator"
-version = "0.3.7"
+version = "0.3.71"
 authors = [
   { name="heit0r", email=" heitordrp@gmail.com" },
 ]
