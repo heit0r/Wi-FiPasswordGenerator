@@ -1,6 +1,6 @@
+# Wi-Fi Password Generator
 ![PyPI version](https://img.shields.io/pypi/v/Wi-FiPasswordGenerator) ![Python Versions](https://img.shields.io/badge/python-3.9%2B-blue) ![Upload to PyPI](https://github.com/heit0r/Wi-FiPasswordGenerator/actions/workflows/pypi.yml/badge.svg) ![License](https://img.shields.io/github/license/heit0r/Wi-FiPasswordGenerator)
 
-# Wi-Fi Password Generator
 
 ![screenshot](https://raw.githubusercontent.com/heit0r/Wi-FiPasswordGenerator/refs/heads/master/assets/screenshot.png)
 
