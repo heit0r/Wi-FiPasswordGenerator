@@ -28,11 +28,11 @@ def generate_password(size_input=63, chars=1):
 # |, I and l are hard to differ in some modern or not monospaced fonts.
 
 
-# easy_characters = "e"
+# easy_characters = "e" # replacing I and l for "" and leaving | out of the list.
 easy_characters = (
     string.ascii_letters.replace("I", "").replace("l", "")
     + string.digits
-    + "!@#$%^&*()-_=+[]{}|;:,.<>/?"
+    + "!@#$%^&*()-_=+[]{};:,.<>/?"
 )
 
 # All characters.
@@ -46,7 +46,7 @@ if __name__ == "__main__":
         input("Type the password size you want between 8 and 63 characters: ")
     )
 
-    characters_input = int(input("1 - Easy Characters:\n2 - Hard Characters: "))
+    characters_input = int(input("0 - Easy Characters:\n1 - Hard Characters: "))
 
     # Validate input size
     validated_size = verify_input_size(size_input)

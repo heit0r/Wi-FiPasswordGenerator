@@ -46,7 +46,9 @@ from tkinter import PhotoImage
 import customtkinter
 import os
 import qrcode
+
 from wi_fipasswordgenerator import core
+# import core
 
 customtkinter.set_appearance_mode("dark")  # Modes: system (default), light, dark
 customtkinter.set_default_color_theme(
@@ -66,9 +68,8 @@ class InfoWindow(customtkinter.CTkToplevel):
         self.geometry("400x500")
         self.title("Wi-Fi Password Generator")
 
-
         # Define window icon
-        
+
         BASE_DIR = os.path.dirname(__file__)
         icon_path = os.path.join(BASE_DIR, "icon.png")
         icon_image = PhotoImage(file=icon_path)
@@ -271,7 +272,7 @@ class App(customtkinter.CTk):
             master=self,
             font=self.textbox_font,
             text="Easy characters",
-            # command=self.radiobutton_event,
+            command=self.radiobutton_event,
             variable=self.radio_var,
             value=0,
         )
@@ -289,7 +290,7 @@ class App(customtkinter.CTk):
             master=self,
             font=self.textbox_font,
             text="Hard characters",
-            # command=self.radiobutton_event,
+            command=self.radiobutton_event,
             variable=self.radio_var,
             value=1,
         )
@@ -404,8 +405,8 @@ class App(customtkinter.CTk):
 
     # Radio buttons
 
-    # def radiobutton_event(self):
-    #     print("radiobutton toggled, value:", self.radio_var.get())
+    def radiobutton_event(self):
+        print("radiobutton toggled, value:", self.radio_var.get())
 
     # Slider
 
@@ -507,6 +508,7 @@ class App(customtkinter.CTk):
 def main():
     application = App()
     application.mainloop()
+
 
 # Although this section seems to work,
 # a strange dpi bug appears when Exit is pressed.

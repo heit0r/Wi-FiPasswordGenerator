@@ -1,8 +1,8 @@
 # Wi-Fi Password Generator
-![PyPI version](https://img.shields.io/pypi/v/Wi-FiPasswordGenerator) ![Python Versions](https://img.shields.io/badge/python-3.9%2B-blue) ![Upload to PyPI](https://github.com/heit0r/Wi-FiPasswordGenerator/actions/workflows/pypi.yml/badge.svg) ![License](https://img.shields.io/github/license/heit0r/Wi-FiPasswordGenerator)
+![PyPI version](https://img.shields.io/pypi/v/Wi-FiPasswordGenerator) ![Python Versions](https://img.shields.io/badge/python-3.9%2B-blue) ![Upload to PyPI](https://github.com/heit0r/Wi-FiPasswordGenerator/actions/workflows/pypi.yml/badge.svg) ![License](https://img.shields.io/github/license/heit0r/Wi-FiPasswordGenerator) [![code style: Ruff](https://img.shields.io/badge/code%20style-Ruff-blueviolet)](https://github.com/astral-sh/ruff) 
 
 
-![screenshot](https://raw.githubusercontent.com/heit0r/Wi-FiPasswordGenerator/refs/heads/master/assets/screenshot.png)
+![screenshot](https://raw.githubusercontent.com/heit0r/Wi-FiPasswordGenerator/refs/heads/master/assets/screenshot.png) 
 
 **Wi-Fi Password Generator** is a cross-platform Python app for generating secure Wi-Fi passwords of up to 63 characters — the maximum allowed by WPA/WPA2 standards. It features a user-friendly GUI and can optionally generate a QR code for easy scanning and sharing.
 
@@ -21,7 +21,15 @@
 
 It is recommended to install **Wi-Fi Password Generator** directly from **PyPI**:
 
-```pip install wi-fipasswordgenerator```
+Install `python` [according to your operating system](https://www.python.org/downloads/).
+
+`python -m venv .venv` - create a virtual environment
+
+`source .venv/bin/activate` - activate your virtual environment
+
+`pip install --upgrade pip` - upgrade pip
+
+`pip install wi-fipasswordgenerator` - install wi-fipasswordgenerator
 
 
 ## Running the App
