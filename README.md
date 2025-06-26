@@ -1,5 +1,5 @@
 # Wi-Fi Password Generator
-![PyPI version](https://img.shields.io/pypi/v/Wi-FiPasswordGenerator) ![Python Versions](https://img.shields.io/badge/python-3.9%2B-blue) ![Upload to PyPI](https://github.com/heit0r/Wi-FiPasswordGenerator/actions/workflows/pypi.yml/badge.svg) ![License](https://img.shields.io/github/license/heit0r/Wi-FiPasswordGenerator) [![code style: Ruff](https://img.shields.io/badge/code%20style-Ruff-blueviolet)](https://github.com/astral-sh/ruff) 
+![PyPI version](https://img.shields.io/pypi/v/Wi-FiPasswordGenerator) ![Python Versions](https://img.shields.io/badge/python-3.9%2B-blue) [![Coverage Status](https://coveralls.io/repos/github/heit0r/Wi-FiPasswordGenerator/badge.svg?branch=master)](https://coveralls.io/github/heit0r/Wi-FiPasswordGenerator?branch=master) ![Upload to PyPI](https://github.com/heit0r/Wi-FiPasswordGenerator/actions/workflows/pypi.yml/badge.svg) ![License](https://img.shields.io/github/license/heit0r/Wi-FiPasswordGenerator) [![code style: Ruff](https://img.shields.io/badge/code%20style-Ruff-blueviolet)](https://github.com/astral-sh/ruff) 
 
 
 ![screenshot](https://raw.githubusercontent.com/heit0r/Wi-FiPasswordGenerator/refs/heads/master/assets/screenshot.png) 
@@ -64,5 +64,5 @@ Image generation by [Pillow](https://github.com/python-pillow/Pillow)
 
 ## Contributing
 
-Pull requests, suggestions, and forks are welcome. If you improve the project or add features, feel free to share.
+Pull requests, suggestions and forks are welcome. If you improve the project or add features, feel free to share.
 
