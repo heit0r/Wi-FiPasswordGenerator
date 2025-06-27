@@ -1,7 +1,6 @@
-# @pytest.fixture 
-# def interface():
-#     return App
-
+import customtkinter
+import pytest
+from wi_fipasswordgenerator import wpg
 
 def test_imports():
     from tkinter import PhotoImage
@@ -18,4 +17,15 @@ def test_imports():
     assert qrcode
     assert wpg
 
+@pytest.fixture 
+def interface():
+    return wpg.InfoWindow
+
+def test_infowindow():
+    root = customtkinter.CTk()
+    root.withdraw()
+
+    info_win = wpg.InfoWindow()
+
+    assert isinstance(info_win, customtkinter.CTkToplevel)
 
